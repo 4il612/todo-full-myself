@@ -22,6 +22,7 @@ const TodoCard = ({
       style={{
         display: "inline-block",
         maxWidth: "200px",
+        minWidth: "150px",
         margin: 20,
         verticalAlign: "top",
       }}
@@ -59,7 +60,7 @@ const TodoCard = ({
             </div>
           )}
         </div>
-        <div style={{ color: "gray" }}>{createdAt}</div>
+        <div style={{ color: "gray", textAlign: "center" }}>{createdAt}</div>
         <div className="todoTitle" style={{ textAlign: "center" }}>
           <strong>{title}</strong>
         </div>
