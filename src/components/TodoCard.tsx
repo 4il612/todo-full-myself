@@ -31,30 +31,35 @@ const TodoCard = ({
           className="todoHead"
           style={{ textAlign: "center", marginBottom: 4 }}
         >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-around",
-            }}
-          >
-            {done && (
-              <>
-                <DoneOutline color="success" />
-                at {doneAt}
-              </>
-            )}
-            {!done && (
-              <>
-                <CancelOutlined color="error" />
-                <Button color="success" variant="contained">
-                  DONE
-                </Button>
-              </>
-            )}
-          </div>
-          <div style={{ color: "gray" }}>{createdAt}</div>
+          {done && (
+            <div
+              title={"finished at " + doneAt}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-around",
+              }}
+            >
+              <DoneOutline color="success" />
+              at {doneAt}
+            </div>
+          )}
+          {!done && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-around",
+              }}
+            >
+              <CancelOutlined color="error" />
+              <Button color="success" variant="contained">
+                DONE
+              </Button>
+            </div>
+          )}
         </div>
+        <div style={{ color: "gray" }}>{createdAt}</div>
         <div className="todoTitle" style={{ textAlign: "center" }}>
           <strong>{title}</strong>
         </div>
