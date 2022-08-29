@@ -1,5 +1,6 @@
 import { Card, CardContent, Button } from "@mui/material";
 import { DoneOutline, CancelOutlined } from "@mui/icons-material";
+import { useState } from "react";
 
 interface TodoCardProps {
   title: string;
@@ -16,6 +17,16 @@ const TodoCard = ({
   createdAt,
   doneAt,
 }: TodoCardProps) => {
+  const [isDone, setIsDone] = useState<boolean>(done);
+  const [doneAtTime, setDoneAtTime] = useState<string | undefined>(doneAt);
+
+  const normalizeDate = () => {
+    const date = new Date();
+    return `${date.getDate()}.${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}.${date.getFullYear()}`;
+  };
+
   return (
     <Card
       variant="outlined"
@@ -32,20 +43,20 @@ const TodoCard = ({
           className="todoHead"
           style={{ textAlign: "center", marginBottom: 4 }}
         >
-          {done && (
+          {isDone && (
             <div
               title={"finished at " + doneAt}
               style={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "space-around",
+                justifyContent: "center",
               }}
             >
               <DoneOutline color="success" />
-              at {doneAt}
+              at {doneAtTime}
             </div>
           )}
-          {!done && (
+          {!isDone && (
             <div
               style={{
                 display: "flex",
@@ -54,7 +65,14 @@ const TodoCard = ({
               }}
             >
               <CancelOutlined color="error" />
-              <Button color="success" variant="contained">
+              <Button
+                onClick={() => {
+                  setIsDone(true);
+                  setDoneAtTime(normalizeDate());
+                }}
+                color="success"
+                variant="contained"
+              >
                 DONE
               </Button>
             </div>
