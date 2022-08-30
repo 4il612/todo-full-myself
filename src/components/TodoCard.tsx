@@ -76,7 +76,7 @@ const TodoCard = ({
               <div className="card-head-iconblock">
                 <CancelOutlined color="error" />
                 <Button
-                  style={{ backgroundColor: "rgb(90, 160, 100)" }}
+                  style={{ backgroundColor: "rgb(100, 180, 120)" }}
                   onClick={() => {
                     setIsDone(true);
                     setDoneAtTime(normalizeDate());
