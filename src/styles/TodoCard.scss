@@ -1,7 +1,20 @@
+// on 0.5s bigger, than setTimeout arg
+$deleteSeconds: 1s;
+
+.cardlist-item {
+  list-style-type: none;
+}
+
 .todocard-item {
   grid-template-rows: 1fr auto;
   margin-bottom: 10px;
   break-inside: avoid;
+}
+
+.todocard-item:hover {
+  cursor: pointer;
+  background: rgb(247, 247, 247);
+  transition: background $deleteSeconds ease;
 }
 
 .card-done-block {
@@ -33,4 +46,9 @@
 .card-description {
   max-width: fit-content;
   hyphens: auto;
+}
+
+.card-deletebtn {
+  text-align: center;
+  color: gray;
 }

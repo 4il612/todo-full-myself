@@ -1,9 +1,14 @@
 import { Card, CardContent, Button } from "@mui/material";
-import { DoneOutline, CancelOutlined } from "@mui/icons-material";
-import { useState } from "react";
+import {
+  DoneOutline,
+  CancelOutlined,
+  DeleteForeverOutlined,
+} from "@mui/icons-material";
+import { useRef, useState } from "react";
 import "../styles/TodoCard.scss";
 
 interface TodoCardProps {
+  id: number;
   title: string;
   done?: boolean;
   description?: string;
@@ -12,6 +17,7 @@ interface TodoCardProps {
 }
 
 const TodoCard = ({
+  id,
   title,
   done = false,
   description,
@@ -20,6 +26,23 @@ const TodoCard = ({
 }: TodoCardProps) => {
   const [isDone, setIsDone] = useState<boolean>(done);
   const [doneAtTime, setDoneAtTime] = useState<string | undefined>(doneAt);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+
+  const timerRef = useRef<NodeJS.Timeout>();
+
+  const onMouseEnter = () => {
+    timerRef.current = setTimeout(() => {
+      setIsHovered(true);
+    }, 500);
+    // add ref in TodoCard.scss variable (scss variable must be on 0.5s bigger)
+  };
+
+  const onMouseLeave = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      setIsHovered(false);
+    }
+  };
 
   const normalizeDate = () => {
     const date = new Date();
@@ -28,9 +51,19 @@ const TodoCard = ({
       .padStart(2, "0")}.${date.getFullYear()}`;
   };
 
+  // actions on delete btn click
+  const deleteButtonHandler = (id: number) => {
+    alert(`${id} card was removed!`);
+  };
+
   return (
-    <li style={{ listStyleType: "none" }}>
-      <Card className="todocard-item" variant="outlined">
+    <li className="cardlist-item">
+      <Card
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        className="todocard-item"
+        variant="outlined"
+      >
         <CardContent>
           <div className="card-head">
             {isDone && (
@@ -61,6 +94,11 @@ const TodoCard = ({
           </div>
           <div className="card-description">{description}</div>
         </CardContent>
+        <div className="card-deletebtn">
+          {isHovered && (
+            <DeleteForeverOutlined onClick={() => deleteButtonHandler(id)} />
+          )}
+        </div>
       </Card>
     </li>
   );
