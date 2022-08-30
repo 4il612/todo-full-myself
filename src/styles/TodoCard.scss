@@ -1,0 +1,36 @@
+.todocard-item {
+  grid-template-rows: 1fr auto;
+  margin-bottom: 10px;
+  break-inside: avoid;
+}
+
+.card-done-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-head {
+  text-align: "center";
+  margin-bottom: 6px;
+}
+
+.card-head-iconblock {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.card-createdblock {
+  color: gray;
+  text-align: center;
+}
+
+.card-title {
+  text-align: center;
+}
+
+.card-description {
+  max-width: fit-content;
+  hyphens: auto;
+}

@@ -1,5 +1,5 @@
 .cardWrapper {
-  display: flex;
-  flex-wrap: wrap;
-  width: 800px;
+  column-count: 4;
+  column-gap: 10px;
+  width: 50%;
 }

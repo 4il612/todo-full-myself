@@ -1,6 +1,7 @@
 import { Card, CardContent, Button } from "@mui/material";
 import { DoneOutline, CancelOutlined } from "@mui/icons-material";
 import { useState } from "react";
+import "../styles/TodoCard.scss";
 
 interface TodoCardProps {
   title: string;
@@ -28,69 +29,40 @@ const TodoCard = ({
   };
 
   return (
-    <Card
-      variant="outlined"
-      style={{
-        display: "inline-block",
-        maxWidth: "200px",
-        minWidth: "150px",
-        margin: 20,
-      }}
-    >
-      <CardContent>
-        <div
-          className="todoHead"
-          style={{ textAlign: "center", marginBottom: 4 }}
-        >
-          {isDone && (
-            <div
-              title={"finished at " + doneAt}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <DoneOutline color="success" />
-              at {doneAtTime}
-            </div>
-          )}
-          {!isDone && (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-around",
-              }}
-            >
-              <CancelOutlined color="error" />
-              <Button
-                onClick={() => {
-                  setIsDone(true);
-                  setDoneAtTime(normalizeDate());
-                }}
-                color="success"
-                variant="contained"
-              >
-                DONE
-              </Button>
-            </div>
-          )}
-        </div>
-        <div style={{ color: "gray", textAlign: "center" }}>{createdAt}</div>
-        <div className="todoTitle" style={{ textAlign: "center" }}>
-          <strong>{title}</strong>
-        </div>
-        <div
-          style={{
-            maxWidth: "fit-content",
-            MozHyphens: "auto",
-          }}
-        >
-          {description}
-        </div>
-      </CardContent>
-    </Card>
+    <li style={{ listStyleType: "none" }}>
+      <Card className="todocard-item" variant="outlined">
+        <CardContent>
+          <div className="card-head">
+            {isDone && (
+              <div className="card-done-block" title={"finished at " + doneAt}>
+                <DoneOutline color="success" />
+                at {doneAtTime}
+              </div>
+            )}
+            {!isDone && (
+              <div className="card-head-iconblock">
+                <CancelOutlined color="error" />
+                <Button
+                  onClick={() => {
+                    setIsDone(true);
+                    setDoneAtTime(normalizeDate());
+                  }}
+                  color="success"
+                  variant="contained"
+                >
+                  DONE
+                </Button>
+              </div>
+            )}
+          </div>
+          <div className="card-createdblock">{createdAt}</div>
+          <div className="card-title">
+            <strong>{title}</strong>
+          </div>
+          <div className="card-description">{description}</div>
+        </CardContent>
+      </Card>
+    </li>
   );
 };
 
