@@ -1,8 +1,11 @@
 // on 0.5s bigger, than setTimeout arg
 $deleteSeconds: 1s;
 
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap");
+
 .cardlist-item {
   list-style-type: none;
+  font-family: "Roboto", sans-serif;
 }
 
 .todocard-item {
