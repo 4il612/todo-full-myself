@@ -35,7 +35,6 @@ const TodoCard = ({
         maxWidth: "200px",
         minWidth: "150px",
         margin: 20,
-        verticalAlign: "top",
       }}
     >
       <CardContent>
