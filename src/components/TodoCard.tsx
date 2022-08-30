@@ -33,7 +33,7 @@ const TodoCard = ({
   const onMouseEnter = () => {
     timerRef.current = setTimeout(() => {
       setIsHovered(true);
-    }, 500);
+    }, 200);
     // add ref in TodoCard.scss variable (scss variable must be on 0.5s bigger)
   };
 
@@ -76,6 +76,7 @@ const TodoCard = ({
               <div className="card-head-iconblock">
                 <CancelOutlined color="error" />
                 <Button
+                  style={{ backgroundColor: "rgb(90, 160, 100)" }}
                   onClick={() => {
                     setIsDone(true);
                     setDoneAtTime(normalizeDate());
