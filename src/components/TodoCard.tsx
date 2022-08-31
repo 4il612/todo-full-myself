@@ -2,7 +2,7 @@ import { Card, CardContent, Button } from "@mui/material";
 import {
   DoneOutline,
   CancelOutlined,
-  DeleteForeverOutlined,
+  CancelRounded,
 } from "@mui/icons-material";
 import { useRef, useState } from "react";
 import "../styles/TodoCard.scss";
@@ -80,12 +80,7 @@ const TodoCard = ({
 
   return (
     <li className="cardlist-item">
-      <Card
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-        className="todocard-item"
-        variant="outlined"
-      >
+      <Card className="todocard-item" variant="outlined">
         <CardContent>
           <div className="card-head">
             {isDone && (
@@ -110,17 +105,23 @@ const TodoCard = ({
               </div>
             )}
           </div>
-          <div className="card-createdblock">{createdAt}</div>
-          <div className="card-title">
-            <strong>{title}</strong>
+          <div
+            className="card-body"
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+          >
+            <div className="card-createdblock">{createdAt}</div>
+            <div className="card-title">
+              <strong>{title}</strong>
+            </div>
+            <div className="card-description">{description}</div>
+            <div className="card-deletebtn">
+              {isHovered && (
+                <CancelRounded onClick={() => deleteButtonHandler(id)} />
+              )}
+            </div>
           </div>
-          <div className="card-description">{description}</div>
         </CardContent>
-        <div className="card-deletebtn">
-          {isHovered && (
-            <DeleteForeverOutlined onClick={() => deleteButtonHandler(id)} />
-          )}
-        </div>
       </Card>
     </li>
   );

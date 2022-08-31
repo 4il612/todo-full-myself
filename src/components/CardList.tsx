@@ -2,6 +2,7 @@ import TodoCard from "./TodoCard";
 import "../styles/CardList.scss";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Masonry } from "@mui/lab";
 
 type Card = {
   id: number;
@@ -37,21 +38,23 @@ const CardList = () => {
   }, [fetching]);
 
   return (
-    <ul className="cardWrapper">
-      {!!cards &&
-        cards.map((card) => {
-          return (
-            <TodoCard
-              key={card.id}
-              id={card.id}
-              title={card.title}
-              done={card.done}
-              doneAt={card.doneAt}
-              createdAt={normalizeRequestDate(card.createdAt)}
-              description={card.description}
-            />
-          );
-        })}
+    <ul>
+      <Masonry columns={4} spacing={1}>
+        {!!cards &&
+          cards.map((card) => {
+            return (
+              <TodoCard
+                key={card.id}
+                id={card.id}
+                title={card.title}
+                done={card.done}
+                doneAt={card.doneAt}
+                createdAt={normalizeRequestDate(card.createdAt)}
+                description={card.description}
+              />
+            );
+          })}
+      </Masonry>
     </ul>
   );
 };

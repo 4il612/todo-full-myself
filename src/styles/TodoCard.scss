@@ -52,6 +52,10 @@ $deleteSeconds: 1s;
 }
 
 .card-deletebtn {
-  text-align: center;
-  color: gray;
+  position: absolute;
+  z-index: 50;
+  scale: 2;
+  margin-left: 45pt;
+  margin-top: -20pt;
+  color: rgb(201, 201, 201);
 }
