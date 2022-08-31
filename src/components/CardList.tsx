@@ -13,7 +13,9 @@ type Card = {
 };
 
 const normalizeRequestDate = (reqDate: string) => {
-  return reqDate.slice(0, 10).split("-").reverse().join(".");
+  return reqDate !== null
+    ? reqDate.slice(0, 10).split("-").reverse().join(".")
+    : "";
 };
 
 const CardList = () => {
@@ -40,6 +42,7 @@ const CardList = () => {
         cards.map((card) => {
           return (
             <TodoCard
+              key={card.id}
               id={card.id}
               title={card.title}
               done={card.done}

@@ -6,14 +6,15 @@ import {
 } from "@mui/icons-material";
 import { useRef, useState } from "react";
 import "../styles/TodoCard.scss";
+import axios from "axios";
 
 interface TodoCardProps {
   id: number;
   title: string;
-  done?: boolean;
+  done: boolean;
   description?: string;
   createdAt: string;
-  doneAt?: string;
+  doneAt: string;
 }
 
 const TodoCard = ({
@@ -25,7 +26,7 @@ const TodoCard = ({
   doneAt,
 }: TodoCardProps) => {
   const [isDone, setIsDone] = useState<boolean>(done);
-  const [doneAtTime, setDoneAtTime] = useState<string | undefined>(doneAt);
+  const [doneAtTime, setDoneAtTime] = useState<string>(doneAt);
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const timerRef = useRef<NodeJS.Timeout>();
@@ -33,7 +34,7 @@ const TodoCard = ({
   const onMouseEnter = () => {
     timerRef.current = setTimeout(() => {
       setIsHovered(true);
-    }, 200);
+    }, 500);
     // add ref in TodoCard.scss variable (scss variable must be on 0.5s bigger)
   };
 
@@ -46,14 +47,35 @@ const TodoCard = ({
 
   const normalizeDate = () => {
     const date = new Date();
-    return `${date.getDate()}.${(date.getMonth() + 1)
+    return `${date.getDate().toString().padStart(2, "0")}.${(
+      date.getMonth() + 1
+    )
       .toString()
       .padStart(2, "0")}.${date.getFullYear()}`;
   };
 
   // actions on delete btn click
-  const deleteButtonHandler = (id: number) => {
-    alert(`${id} card was removed!`);
+  const deleteButtonHandler = (cardId: number) => {
+    axios
+      .delete(`http://localhost:5000/api/${cardId}`)
+      .then(() => alert(`ToDo ${cardId} was successfully removed!`))
+      .catch((e) => alert(e));
+  };
+
+  const doneButtonHandler = (cardId: number) => {
+    setIsDone(true);
+    //need fix doneAtTime arg in PATCH-request
+    setDoneAtTime(normalizeDate());
+    const tmp = normalizeDate();
+
+    axios
+      .patch(`http://localhost:5000/api/${cardId}`, {
+        done: true,
+        doneAt: tmp,
+        title: title,
+        description: description,
+      })
+      .catch((e) => alert(e));
   };
 
   return (
@@ -78,8 +100,7 @@ const TodoCard = ({
                 <Button
                   style={{ backgroundColor: "rgb(100, 180, 120)" }}
                   onClick={() => {
-                    setIsDone(true);
-                    setDoneAtTime(normalizeDate());
+                    doneButtonHandler(id);
                   }}
                   color="success"
                   variant="contained"
