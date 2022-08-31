@@ -1,43 +1,54 @@
 import TodoCard from "./TodoCard";
 import "../styles/CardList.scss";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+type Card = {
+  id: number;
+  done: boolean;
+  doneAt: string;
+  title: string;
+  description: string;
+  createdAt: string;
+};
+
+const normalizeRequestDate = (reqDate: string) => {
+  return reqDate.slice(0, 10).split("-").reverse().join(".");
+};
 
 const CardList = () => {
+  const [fetching, setFetching] = useState<boolean>(true);
+  const [cards, setCards] = useState<Card[] | null>(null);
+
+  useEffect(() => {
+    if (fetching) {
+      axios
+        .get("http://localhost:5000/api")
+        .then((response) => {
+          setCards(response.data);
+        })
+        .catch((e) => alert(e))
+        .finally(() => {
+          setFetching(false);
+        });
+    }
+  }, [fetching]);
+
   return (
     <ul className="cardWrapper">
-      <TodoCard id={1} title="Pervoe zadanie" createdAt="28.01.2002" />
-      <TodoCard id={2} title="Vtoroe zadanie" createdAt="28.05.2002" />
-      <TodoCard id={3} title="Tret'e zadanie" createdAt="30.11.2012" />
-      <TodoCard
-        id={4}
-        title="Chetvertoe zadanie"
-        createdAt="01.10.2020"
-        description="Eto ochen' vazhone zadanie!"
-      />
-      <TodoCard
-        id={5}
-        title="Pyatoe zadanie"
-        createdAt="11.10.2020"
-        description="Eto ochen' ochen' vazhone zadanie!"
-        done={true}
-        doneAt="20.11.2021"
-      />
-      <TodoCard id={6} title="Pervoe zadanie" createdAt="28.01.2002" />
-      <TodoCard id={7} title="Vtoroe zadanie" createdAt="28.05.2002" />
-      <TodoCard id={8} title="Tret'e zadanie" createdAt="30.11.2012" />
-      <TodoCard
-        id={9}
-        title="Chetvertoe zadanie"
-        createdAt="01.10.2020"
-        description="Eto ochen' vazhone zadanie!"
-      />
-      <TodoCard
-        id={10}
-        title="Pyatoe zadanie"
-        createdAt="11.10.2020"
-        description="Eto ochen' ochen' vazhone zadanie!"
-        done={true}
-        doneAt="20.11.2021"
-      />
+      {!!cards &&
+        cards.map((card) => {
+          return (
+            <TodoCard
+              id={card.id}
+              title={card.title}
+              done={card.done}
+              doneAt={card.doneAt}
+              createdAt={normalizeRequestDate(card.createdAt)}
+              description={card.description}
+            />
+          );
+        })}
     </ul>
   );
 };
