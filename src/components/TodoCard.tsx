@@ -59,7 +59,7 @@ const TodoCard = ({
     axios
       .delete(`http://localhost:5000/api/${cardId}`)
       .then(() => alert(`ToDo ${cardId} was successfully removed!`))
-      .catch((e) => alert(e));
+      .catch((e: any) => alert(e));
   };
 
   const doneButtonHandler = (cardId: number) => {
@@ -75,7 +75,7 @@ const TodoCard = ({
         title: title,
         description: description,
       })
-      .catch((e) => alert(e));
+      .catch((e: any) => alert(e));
   };
 
   return (
