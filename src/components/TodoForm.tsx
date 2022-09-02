@@ -26,7 +26,7 @@ const TodoForm = () => {
         padding: 24,
       }}
     >
-      <Grid container spacing={2} columns={1} style={{ width: 400 }}>
+      <Grid container spacing={2} columns={1}>
         <Grid item>
           <TextField
             onChange={(e) => {

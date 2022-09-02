@@ -1,0 +1,15 @@
+.app-bar {
+  background-color: #2e7d32;
+  margin-bottom: 20px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bar-typography {
+  display: flex;
+  font-family: monospace;
+  font-weight: 700;
+  letter-spacing: 0.3rem;
+}
