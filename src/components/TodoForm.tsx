@@ -1,6 +1,7 @@
 import { Grid, TextField, Button } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
+import "../styles/TodoForm.scss";
 
 const TodoForm = () => {
   const [title, setTitle] = useState<string>("");
@@ -19,14 +20,8 @@ const TodoForm = () => {
   };
 
   return (
-    <div
-      style={{
-        border: "15px solid #2E7D32",
-        display: "inline-block",
-        padding: 24,
-      }}
-    >
-      <Grid container spacing={2} columns={1}>
+    <div className="form-wrapper">
+      <Grid container spacing={2} columns={16}>
         <Grid item>
           <TextField
             onChange={(e) => {
@@ -39,7 +34,10 @@ const TodoForm = () => {
             color="success"
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={8}>
+          <div className="new-todo-label">Add new ToDo</div>
+        </Grid>
+        <Grid item xs={16}>
           <TextField
             onChange={(e) => {
               setDescription(e.target.value);
@@ -53,7 +51,7 @@ const TodoForm = () => {
             color="success"
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={16}>
           <Button
             onClick={acceptButtonHandler}
             fullWidth

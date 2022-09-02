@@ -5,11 +5,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: static;
+  color: white;
 }
 
 .bar-typography {
   display: flex;
   font-family: monospace;
   font-weight: 700;
-  letter-spacing: 0.3rem;
+  font-size: 6.8rem;
 }
