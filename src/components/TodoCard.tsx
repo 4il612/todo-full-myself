@@ -4,9 +4,11 @@ import {
   CancelOutlined,
   CancelRounded,
 } from "@mui/icons-material";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import "../styles/TodoCard.scss";
 import axios from "axios";
+import { Context } from "..";
+import { observer } from "mobx-react-lite";
 
 interface TodoCardProps {
   id: number;
@@ -30,6 +32,8 @@ const TodoCard = ({
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const timerRef = useRef<NodeJS.Timeout>();
+
+  const { cards } = useContext(Context);
 
   const onMouseEnter = () => {
     timerRef.current = setTimeout(() => {
@@ -58,7 +62,9 @@ const TodoCard = ({
   const deleteButtonHandler = (cardId: number) => {
     axios
       .delete(`http://localhost:5000/api/${cardId}`)
-      .then(() => alert(`ToDo ${cardId} was successfully removed!`))
+      .then(() => {
+        cards.deleteCard(cardId);
+      })
       .catch((e: any) => alert(e));
   };
 
@@ -126,5 +132,4 @@ const TodoCard = ({
     </li>
   );
 };
-
 export default TodoCard;

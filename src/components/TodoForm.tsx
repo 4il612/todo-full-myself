@@ -1,11 +1,14 @@
 import { Grid, TextField, Button } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import "../styles/TodoForm.scss";
+import { Context } from "..";
 
 const TodoForm = () => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+
+  const { cards } = useContext(Context);
 
   const acceptButtonHandler = () => {
     axios
@@ -15,8 +18,13 @@ const TodoForm = () => {
         title: title,
         description: description,
       })
-      .then(() => alert("GOOD"))
-      .catch((e) => alert(e));
+      .then(() => {
+        axios
+          .get("http://localhost:5000/api")
+          .then((response) => cards.setCards(response.data))
+          .catch((e: any) => alert(e));
+      })
+      .catch((e: any) => alert(e));
   };
 
   return (

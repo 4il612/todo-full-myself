@@ -1,8 +1,10 @@
 import TodoCard from "./TodoCard";
 import "../styles/CardList.scss";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Masonry } from "@mui/lab";
+import { Context } from "..";
+import { observer } from "mobx-react-lite";
 
 type Card = {
   id: number;
@@ -19,16 +21,18 @@ const normalizeRequestDate = (reqDate: string) => {
     : "";
 };
 
-const CardList = () => {
+const CardList = observer(() => {
   const [fetching, setFetching] = useState<boolean>(true);
-  const [cards, setCards] = useState<Card[] | null>(null);
+  //const [cards, setCards] = useState<Card[] | null>(null);
+
+  const { cards } = useContext(Context);
 
   useEffect(() => {
     if (fetching) {
       axios
         .get("http://localhost:5000/api")
         .then((response) => {
-          setCards(response.data);
+          cards.setCards(response.data);
         })
         .catch((e) => alert(e))
         .finally(() => {
@@ -41,7 +45,7 @@ const CardList = () => {
     <ul>
       <Masonry columns={4} spacing={1}>
         {!!cards &&
-          cards.map((card) => {
+          cards.cards.map((card) => {
             return (
               <TodoCard
                 key={card.id}
@@ -57,6 +61,6 @@ const CardList = () => {
       </Masonry>
     </ul>
   );
-};
+});
 
 export default CardList;
